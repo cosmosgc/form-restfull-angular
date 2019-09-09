@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Bootstrap 4, from LayoutIt!</title>
+
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+	
+	
+
+    <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js'/></script>
+        <script
+           src='http://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.js'>
+        </script>
+        <script>
+        var app = angular.module('consumeRestApp', ['ngResource']);
+
+        app.factory("customers", function($resource) {
+            return $resource("api/customers");
+        });
+
+        app.controller("CustomersCtrl", function($scope, customers) {
+        	customers.query(function(data) {
+                $scope.customers = data;
+            }, function(err) {
+                console.error("Error occured: ", err);
+            });
+        });
+        </script>
+
+  </head>
+  <body ng-app='consumeRestApp'>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-6">
+					<form action="api/customers" method="post" >
+						<div class="form-group">
+							 <input type="hidden" name="id" value="0">
+							<label>
+								Name
+							</label>
+							<input type="text" class="form-control" name="name">
+						</div>
+						<div class="form-group">
+							 
+							<label>
+								Email address
+							</label>
+							<input type="email" class="form-control" data-inputmask="'mask' : '__@__._'" name="email">
+						</div>
+						<div class="form-group">
+							 
+							<label>
+								Comment
+							</label>
+							<input type="text" class="form-control" name="comment">
+						</div>
+						<div class="form-group">
+							 
+							<label>
+								CNPJ
+							</label>
+							<input type="cnpj" class="form-control"  data-inputmask="'mask' : '99.999.999/9999-99'" name="cnpj">
+						</div>
+						
+						<button type="submit" class="btn btn-primary">
+							Submit
+						</button>
+					</form>
+				</div>
+				<div class="col-md-6" ng-app='consumeRestApp'>
+					<div id="card-865490" ng-controller='CustomersCtrl'>
+						<div ng-repeat='customer in customers'>
+							<div class="card">
+								<div class="card-header">
+									 <a class="card-link collapsed" data-toggle="collapse" data-parent="#card-865490" href="#card-element-{{ customer.id }}">{{ customer.name }}</a>
+								</div>
+								<div id="card-element-{{ customer.id }}" class="collapse">
+									<div class="card-body">
+										<form action="api/customers" method="post" >
+						<div class="form-group">
+						
+							 id: {{ customer.id }}
+							 <input type="hidden" id="custId" name="id" value="{{ customer.id }}">
+							  <br>
+							<label>
+								Name
+							</label>
+							<input type="text" class="form-control" name="name" value="{{ customer.name }}">
+						</div>
+						<div class="form-group">
+							 
+							<label>
+								Email address
+							</label>
+							<input type="email" class="form-control" name="email" data-inputmask="'mask' : '__@__._'" value="{{ customer.email }}">
+						</div>
+						<div class="form-group">
+							 
+							<label>
+								Comment
+							</label>
+							<input type="text" class="form-control" name="comment" value="{{ customer.comment }}">
+						</div>
+						<div class="form-group">
+							 
+							<label>
+								CNPJ
+							</label>
+							<input type="cnpj" class="form-control" name="cnpj" data-inputmask="'mask' : '99.999.999/9999-99'" value="{{ customer.cnpj }}">
+						</div>
+						
+						<button type="submit" class="btn btn-primary">
+							Submit
+						</button>
+					</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.inputmask.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+	$(document).ready(function(){
+		  $(":input").inputmask();
+		  or
+		  Inputmask().mask(document.querySelectorAll("input"));
+		});</script>
+  </body>
+</html>

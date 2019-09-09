@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js'/></script>
+        <script
+           src='http://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.js'>
+        </script>
+        <script>
+        var app = angular.module('consumeRestApp', ['ngResource']);
+
+        app.factory("customers", function($resource) {
+            return $resource("api/customers");
+        });
+
+        app.controller("CustomersCtrl", function($scope, customers) {
+        	customers.query(function(data) {
+                $scope.customers = data;
+            }, function(err) {
+                console.error("Error occured: ", err);
+            });
+        });
+        </script>
+    </head>
+    <body ng-app='consumeRestApp'>
+        <div ng-controller='CustomersCtrl'>
+            <div ng-repeat='customer in customers'>
+                <p>{{ customer.name }}</p>
+                <b>{{ customer.email }}</b> 
+                <b>{{ customer.cnpj }}</b> 
+                <b>{{ customer.comment }}</b> 
+                
+                </div>
+            </div>
+    </body>
+</html>
